@@ -1,0 +1,12 @@
+flask
+flask_sqlalchemy
+flask_jwt_extended
+gunicorn
+opencv-python
+numpy
+scikit-learn
+pillow
+mediapipe
+tensorflow
+speechrecognition
+pyaudio
