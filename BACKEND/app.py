@@ -14,13 +14,9 @@ from face_recognition_cnn import verify_face
 from risk_engine import calculate_risk
 
 # ==================================================
-# 🚀 APP INIT
+# 🚀 APP INIT (DEFAULT FLASK STRUCTURE)
 # ==================================================
-app = Flask(
-    __name__,
-    template_folder="../frontend/templates",
-    static_folder="../frontend/static"
-)
+app = Flask(__name__)
 
 # ==================================================
 # ⚙️ CONFIG (CLOUD + LOCAL SAFE)
@@ -46,7 +42,8 @@ events = {
 }
 
 # ==================================================
-# 🔐 LOGIN
+# 📝 REGISTER
+# ==================================================
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
@@ -58,18 +55,20 @@ def register():
         if User.query.filter_by(username=username).first():
             return "User already exists"
 
-        # Create new user
+        # Create user
         user = User(username=username, role=role)
         user.set_password(password)
 
         db.session.add(user)
         db.session.commit()
 
-        # After register → login page
+        # Redirect to login after registration
         return redirect("/")
 
     return render_template("register.html")
 
+# ==================================================
+# 🔐 LOGIN
 # ==================================================
 @app.route("/", methods=["GET", "POST"])
 def login():
@@ -114,12 +113,12 @@ def monitor():
     if frame is None:
         return jsonify({"error": "Camera not working"})
 
-    # Face verification (CNN)
+    # CNN Face Verification
     verified, person = verify_face(frame)
     if not verified:
         events["MULTIPLE_FACES"] += 1
 
-    # Face & gaze
+    # Face & gaze analysis
     face_status = analyze_face(frame)
     gaze_status = check_gaze(frame)
     blink = detect_blink(frame)
@@ -130,7 +129,7 @@ def monitor():
     if gaze_status == "LOOKING_AWAY":
         events["LOOKING_AWAY"] += 1
 
-    # Audio cheating
+    # Audio cheating detection
     audio_flag, speech_text = detect_audio_cheating()
     if audio_flag:
         events["AUDIO_DETECTED"] += 1
