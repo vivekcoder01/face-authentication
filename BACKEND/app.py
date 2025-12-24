@@ -16,13 +16,9 @@ from risk_engine import calculate_risk
 
 
 # ==================================================
-# 🚀 APP INIT
+# 🚀 APP INIT (DEFAULT FLASK PATHS)
 # ==================================================
-app = Flask(
-    __name__,
-    template_folder="../frontend/templates",
-    static_folder="../frontend/static"
-)
+app = Flask(__name__)
 
 # ==================================================
 # ⚙️ CONFIG (RENDER-SAFE SQLITE)
@@ -54,7 +50,6 @@ events = {
 # ==================================================
 # 🔐 AUTH ROUTES
 # ==================================================
-
 @app.route("/", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -76,7 +71,6 @@ def login():
 # ==================================================
 # 🎓 STUDENT ROUTES
 # ==================================================
-
 @app.route("/exam")
 @role_required("student")
 def exam():
@@ -90,12 +84,10 @@ def monitor():
     if frame is None:
         return jsonify({"error": "Camera not working"})
 
-    # FACE VERIFICATION
     verified, person = verify_face(frame)
     if not verified:
         events["MULTIPLE_FACES"] += 1
 
-    # FACE + GAZE + BLINK
     face_status = analyze_face(frame)
     gaze_status = check_gaze(frame)
     blink = detect_blink(frame)
@@ -106,15 +98,12 @@ def monitor():
     if gaze_status == "LOOKING_AWAY":
         events["LOOKING_AWAY"] += 1
 
-    # AUDIO CHEATING
     audio_flag, speech_text = detect_audio_cheating()
     if audio_flag:
         events["AUDIO_DETECTED"] += 1
 
-    # RISK CALCULATION
     risk = calculate_risk(events)
 
-    # SAVE VIOLATION
     violation = Violation(
         violation_type=face_status,
         risk_level=risk,
@@ -139,7 +128,6 @@ def monitor():
 # ==================================================
 # 👨‍💼 ADMIN ROUTES
 # ==================================================
-
 @app.route("/admin")
 @role_required("admin")
 def admin():
