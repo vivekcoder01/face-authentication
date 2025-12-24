@@ -25,9 +25,10 @@ app = Flask(
 )
 
 # ==================================================
-# ⚙️ CONFIG
+# ⚙️ CONFIG (RENDER-SAFE SQLITE)
 # ==================================================
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///../database/proctoring.db"
+DB_PATH = os.path.join("/tmp", "proctoring.db")
+app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DB_PATH}"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["JWT_SECRET_KEY"] = os.environ.get("JWT_SECRET_KEY", "dev-secret")
 
