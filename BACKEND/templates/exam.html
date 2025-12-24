@@ -1,16 +1,68 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Online Exam</title>
-  <script src="/static/monitor.js"></script>
+    <meta charset="UTF-8">
+    <title>Online Exam</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        ul {
+            margin-left: 20px;
+        }
+        .warning {
+            margin-top: 15px;
+            color: red;
+            font-weight: bold;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
 </head>
 <body>
 
-<h2>AI Proctored Online Exam</h2>
+<div class="container">
+    <h2>Online Examination</h2>
 
-<p>Q1. What is Artificial Intelligence?</p>
-<input type="radio"> Machine Learning<br>
-<input type="radio"> Human Intelligence<br>
+    <p><strong>Instructions:</strong></p>
+    <ul>
+        <li>Keep your face clearly visible</li>
+        <li>Do not change browser tabs</li>
+        <li>No talking during the exam</li>
+    </ul>
+
+    <p class="warning">
+        ⚠️ AI Proctoring is active. Any suspicious activity will be logged.
+    </p>
+
+    <button onclick="alert('Exam Started! Monitoring is active.')">
+        Start Exam
+    </button>
+</div>
 
 </body>
 </html>

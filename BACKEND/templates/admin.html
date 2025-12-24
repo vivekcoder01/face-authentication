@@ -1,27 +1,67 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Proctoring Dashboard</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            padding: 20px;
+        }
+        h2 {
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background: #007bff;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background: #f2f2f2;
+        }
+    </style>
+</head>
 <body>
-<h2>Admin Proctoring Dashboard</h2>
 
-<table border="1">
-<tr>
-<th>ID</th>
-<th>Violation</th>
-<th>Risk</th>
-<th>Time</th>
-</tr>
+<h2>Admin – Proctoring Logs</h2>
 
-{% for log in logs %}
-<tr>
-<td>{{ log.id }}</td>
-<td>{{ log.violation_type }}</td>
-<td>{{ log.risk_level }}</td>
-<td>{{ log.timestamp }}</td>
-</tr>
-{% endfor %}
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Violation Type</th>
+        <th>Risk Level</th>
+        <th>Audio</th>
+        <th>Timestamp</th>
+    </tr>
+
+    {% for log in logs %}
+    <tr>
+        <td>{{ log.id }}</td>
+        <td>{{ log.violation_type }}</td>
+        <td>{{ log.risk_level }}</td>
+        <td>
+            {% if log.audio %}
+                {{ log.audio }}
+            {% else %}
+                N/A
+            {% endif %}
+        </td>
+        <td>{{ log.timestamp }}</td>
+    </tr>
+    {% endfor %}
 </table>
 
 </body>
 </html>
-<th>Audio</th>
-<td>{{ log.violation_type }}</td>
