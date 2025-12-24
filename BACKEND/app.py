@@ -47,6 +47,29 @@ events = {
 
 # ==================================================
 # 🔐 LOGIN
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+        role = request.form.get("role")
+
+        # Duplicate user check
+        if User.query.filter_by(username=username).first():
+            return "User already exists"
+
+        # Create new user
+        user = User(username=username, role=role)
+        user.set_password(password)
+
+        db.session.add(user)
+        db.session.commit()
+
+        # After register → login page
+        return redirect("/")
+
+    return render_template("register.html")
+
 # ==================================================
 @app.route("/", methods=["GET", "POST"])
 def login():
