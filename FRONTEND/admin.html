@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h2>Admin Proctoring Dashboard</h2>
+
+<table border="1">
+<tr>
+<th>ID</th>
+<th>Violation</th>
+<th>Risk</th>
+<th>Time</th>
+</tr>
+
+{% for log in logs %}
+<tr>
+<td>{{ log.id }}</td>
+<td>{{ log.violation_type }}</td>
+<td>{{ log.risk_level }}</td>
+<td>{{ log.timestamp }}</td>
+</tr>
+{% endfor %}
+</table>
+
+</body>
+</html>
+<th>Audio</th>
+<td>{{ log.violation_type }}</td>
