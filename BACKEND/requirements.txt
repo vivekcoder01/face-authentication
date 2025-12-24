@@ -9,4 +9,3 @@ pillow
 mediapipe
 tensorflow
 speechrecognition
-pyaudio
